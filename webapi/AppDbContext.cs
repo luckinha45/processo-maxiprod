@@ -7,16 +7,17 @@ public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
+    // DBSets das Models
     public DbSet<Pessoa> Pessoas { get; set; }
     public DbSet<Categoria> Categorias { get; set; }
     public DbSet<Transacao> Transacoes { get; set; }
 
+    /// <summary>
+    /// Configura as relações entre os modelos
+    /// </summary>
+    /// <param name="modelBuilder"></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        #region Transacao
-
-        #endregion
-        
+    {        
         #region Pessoa
         
         modelBuilder.Entity<Pessoa>()
@@ -39,13 +40,19 @@ public class AppDbContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
+    /// <summary>
+    /// Função chamada quando é salvo uma alteração no BD, ela é sobrescrita para preencher created_at e updated_at.
+    /// </summary>
+    /// <returns></returns>
     public override int SaveChanges()
     {
         AddTimestamps();
         return base.SaveChanges();
     }
 
-
+    /// <summary>
+    /// Adiciona os valores para created_at e updated_at nos registros alterados/adicionados
+    /// </summary>
     private void AddTimestamps()
     {
         var entries = ChangeTracker.Entries()

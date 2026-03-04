@@ -2,6 +2,9 @@ namespace webapi.Models;
 
 using System.ComponentModel.DataAnnotations;
 
+/// <summary>
+/// Adiciona id, created_at e updated_at para as Models que a utilizarem
+/// </summary>
 public abstract class BaseModel
 {
     [Key]

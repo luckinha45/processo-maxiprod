@@ -6,6 +6,17 @@ namespace webapi.Controllers;
 
 public class TransacaoController(AppDbContext ctx, Models.TransacaoValidator validator) : ControllerBase
 {
+    /// <summary>
+    /// Cria uma nova <c>Transacao</c> se os dados são validados.
+    /// </summary>
+    /// 
+    /// <param name="body"> Os dados para fazer o cadastro da <c>Transacao</c>, no formato JSON. </param>
+    /// 
+    /// <returns>
+    /// Caso os dados foram validados, retorna a <c>Transacao</c> criada.<br/>
+    /// Caso <c>Categoria</c> ou <c>Pessoa</c> não foram encontrados com os ids fornecidos, retorna erro <c>404</c>.<br/>
+    /// Caso haja dados incorretos, retorna erro <c>400</c>, listando os erros.
+    /// </returns>
     [HttpPost("transacao")]
     public async Task<IActionResult> Create([FromBody] JsonNode body)
     {
@@ -55,6 +66,9 @@ public class TransacaoController(AppDbContext ctx, Models.TransacaoValidator val
         });
     }
 
+    /// <summary>
+    /// Retorna todas as <c>Transacoes</c> já criadas.
+    /// </summary>
     [HttpGet("transacao")]
     public IActionResult GetAll()
     {
@@ -74,6 +88,16 @@ public class TransacaoController(AppDbContext ctx, Models.TransacaoValidator val
         return Ok(transacoes);
     }
 
+    /// <summary>
+    /// Busca uma <c>Transacao</c> com o id informado e o retorna.
+    /// </summary>
+    /// 
+    /// <param name="id"> Identificador de uma <c>Transacao</c>. </param>
+    /// 
+    /// <returns>
+    /// Caso exista uma <c>Transacao</c> com o id passado, retorna seus dados.<br/>
+    /// Caso não, retorna erro <c>404</c>.
+    /// </returns>
     [HttpGet("transacao/{id}")]
     public IActionResult GetById(int id)
     {

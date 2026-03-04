@@ -1,8 +1,6 @@
 using System.Reflection;
 using System.Text.Json;
 using FluentValidation;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,7 +34,7 @@ builder.Services.AddDbContext<webapi.AppDbContext>(options =>
 // configurando Validators
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-// fazendo o build e as configurações de middleware
+// fazendo o build e adicionando configurações de middleware
 var app = builder.Build();
 app.MapControllers();
 app.UseCors(FrontendOrigins);
